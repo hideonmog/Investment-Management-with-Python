@@ -9,6 +9,7 @@ pandas = "*"
 ipykernel = "*"
 jupyter = "*"
 notebook = "*"
+matplotlib = "*"
 
 [dev-packages]
 
