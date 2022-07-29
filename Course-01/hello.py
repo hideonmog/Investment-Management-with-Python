@@ -1,0 +1,1 @@
+message = 'Hello Hideonmog and Mog'
