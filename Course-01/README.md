@@ -8,5 +8,7 @@
 - [Measuring Max Drawdown](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/03-measuring-max-drawdown.ipynb)
 
 ### Section 2 - Beyond the Gaussian Case: Extreme Risk Estimates 
+- [Deviations from Normality](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/04-deviations-from-normality.ipynb) 
+- Downside Risk Meaures 
 
 ## An Introduction to Portfolio Optimisation
