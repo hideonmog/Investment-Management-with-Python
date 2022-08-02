@@ -10,5 +10,6 @@
 ### Section 2 - Beyond the Gaussian Case: Extreme Risk Estimates 
 - [Deviations from Normality](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/04-deviations-from-normality.ipynb) 
 - [Downside Risk Meaures](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/05-downside-risk-measures.ipynb) 
-- Estimating VaR
+- [Estimating VaR](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/06-estimating-var.ipynb)
+
 ## An Introduction to Portfolio Optimisation
