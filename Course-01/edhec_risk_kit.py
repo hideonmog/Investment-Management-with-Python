@@ -48,6 +48,17 @@ def get_hfi_returns():
     hfi.index = pd.to_datetime(hfi.index, format = '%Y%m').to_period('M')
     return hfi
 
+def get_ind_returns():
+    '''
+    Load and format the Ken French 30 Industry Portfolios Value Weighted Monthly Returns
+    '''
+    ind = pd.read_csv('data/ind30_m_vw_rets.csv',
+                        header = 0,
+                        index_col = 0)/100
+    ind.index = pd.to_datetime(ind.index, format = '%Y%m').to_period('M')
+    ind.columns = ind.columns.str.strip()
+    return ind
+
 def semideviation(r):
     '''
     Returns the semideviation (negative semideviation) of r
@@ -137,7 +148,7 @@ def var_gaussian(r, level = 5, modified = False):
 
 def cvar_historic(r, level = 5):
     '''
-    Computes the Conditional VaR of Series or DataFrame
+    Computes the Conditional historic VaR of Series or DataFrame
     '''
     if isinstance(r, pd.Series):
         is_beyond = r <= -var_historic(r, level = level)
@@ -149,7 +160,9 @@ def cvar_historic(r, level = 5):
 
 def cvar_gaussian(r, level = 5, modified = False):
     '''
-    Computes the Conditional VaR of Series or DataFrame
+    Computes the Conditional parametric gaussian VaR of Series or DataFrame
+    If 'modified' is True, then the modified CVaR is returned,
+    using the Cornish-Fisher modification
     '''
     if isinstance(r, pd.Series):
         is_beyond = r <= -var_gaussian(r, level = level, modified = modified)
@@ -158,3 +171,28 @@ def cvar_gaussian(r, level = 5, modified = False):
         return r.aggregate(cvar_gaussian, level = level, modified = modified)
     else:
         raise TypeError('Expected r to be a Series or DataFrame')
+
+def annualise_rets(r, periods_per_year):
+    '''
+    Annualises a set of returns
+    '''
+    compounded_growth = (1+r).prod()
+    n_periods = r.shape[0]
+    return compounded_growth**(periods_per_year/n_periods) - 1
+
+def annualise_vol(r, periods_per_year):
+    '''
+    Annualise the vol of a set of returns
+    '''
+    return r.std()*(periods_per_year**0.5)
+
+def sharpe_ratio(r, risk_free_rate, periods_per_year):
+    '''
+    Computes the annualised Sharpe Ratio of a set of returns
+    '''
+    # convert the annual risk free rate to per period
+    rf_per_period = (1+risk_free_rate)**(1/periods_per_year) - 1
+    excess_ret = r - rf_per_period
+    ann_ex_ret = annualise_rets(excess_ret, periods_per_year)
+    ann_vol = annualise_vol(r, periods_per_year)
+    return ann_ex_ret/ann_vol
