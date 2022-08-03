@@ -1,5 +1,9 @@
 # Introduction to Portfolio Construction and Analysis with Python
 
+Throughout this course we will be learning about portfolio construction and analysis whilst also developing a library containing the tools required to do this; - [EDHEC Risk Kit](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/edhec_risk_kit.py).
+
+Below are my notes and lab session work contained in jupyter notebooks, named by content covered and in chronological order.
+
 ## Analysing Returns
 
 ### Section 1 - Fundamentals of Risk and Return
@@ -13,3 +17,7 @@
 - [Estimating VaR](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/06-estimating-var.ipynb)
 
 ## An Introduction to Portfolio Optimisation
+
+### Section 1 - Introduction to Optimisation and the Efficient Frontier 
+- [The Only Free Lunch in Finance](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/07-the-only-free-lunch.ipynb)
+- [The Efficient Frontier](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/08-efficient-frontier.ipynb)
