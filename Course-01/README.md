@@ -21,3 +21,10 @@ Below are my notes and lab session work contained in jupyter notebooks, named by
 ### Section 1 - Introduction to Optimisation and the Efficient Frontier 
 - [The Only Free Lunch in Finance](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/07-the-only-free-lunch.ipynb)
 - [The Efficient Frontier](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/08-efficient-frontier.ipynb)
+
+### Section 2 - Implementing Markowitz
+- [Fund Separation Theorem and The Capital Market Line](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/09-fund-separation-theorem.ipynb)
+- Lack of Robustness of Markowitz analysis
+
+## Beyond Diversification
+## Introduction to Asset-Liability Management 
