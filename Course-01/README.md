@@ -24,7 +24,7 @@ Below are my notes and lab session work contained in jupyter notebooks, named by
 
 ### Section 2 - Implementing Markowitz
 - [Fund Separation Theorem and The Capital Market Line](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/09-fund-separation-theorem.ipynb)
-- Lack of Robustness of Markowitz analysis
+- [Lack of Robustness of Markowitz Analysis](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/10-robustness-of-markowitz.ipynb)
 
 ## Beyond Diversification
 ## Introduction to Asset-Liability Management 
