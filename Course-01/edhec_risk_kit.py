@@ -60,6 +60,26 @@ def get_ind_returns():
     ind.columns = ind.columns.str.strip()
     return ind
 
+def get_ind_size():
+    '''
+    '''
+    ind = pd.read_csv('data/ind30_m_size.csv',
+                        header = 0,
+                        index_col = 0)
+    ind.index = pd.to_datetime(ind.index, format = '%Y%m').to_period('M')
+    ind.columns = ind.columns.str.strip()
+    return ind
+
+def get_ind_nfirms():
+    '''
+    '''
+    ind = pd.read_csv('data/ind30_m_nfirms.csv',
+                        header = 0,
+                        index_col = 0)
+    ind.index = pd.to_datetime(ind.index, format = '%Y%m').to_period('M')
+    ind.columns = ind.columns.str.strip()
+    return ind
+
 def semideviation(r):
     '''
     Returns the semideviation (negative semideviation) of r
