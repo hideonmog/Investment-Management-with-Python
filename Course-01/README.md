@@ -27,4 +27,9 @@ Below are my notes and lab session work contained in jupyter notebooks, named by
 - [Lack of Robustness of Markowitz Analysis](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/10-robustness-of-markowitz.ipynb)
 
 ## Beyond Diversification
+
+### Section 1
+- [Limits of Diversification](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/11-limits-of-diversification.ipynb)
+- Introduction to CPPI
+
 ## Introduction to Asset-Liability Management 
