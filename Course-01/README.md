@@ -30,6 +30,10 @@ Below are my notes and lab session work contained in jupyter notebooks, named by
 
 ### Section 1
 - [Limits of Diversification](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/11-limits-of-diversification.ipynb)
-- Introduction to CPPI
+- [Introduction to CPPI](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/12-intro-to-cppi.ipynb)
+
+### Section 2
+- Stochastic Model
+- Analysing, Designing and Calibrating CPPI Strategies
 
 ## Introduction to Asset-Liability Management 
