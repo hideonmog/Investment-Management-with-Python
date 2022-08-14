@@ -1,3 +1,4 @@
+from email.errors import InvalidMultipartContentTransferEncodingDefect
 import pandas as pd
 import scipy.stats
 import scipy.optimize
@@ -79,6 +80,19 @@ def get_ind_nfirms():
     ind.index = pd.to_datetime(ind.index, format = '%Y%m').to_period('M')
     ind.columns = ind.columns.str.strip()
     return ind
+
+def get_total_market_index_returns():
+    '''
+    Load the 30 industry portfolio data and derive the returns of a capweighted total market index
+    '''
+    ind_nfirms = get_ind_nfirms()
+    ind_size = get_ind_size()
+    ind_return = get_ind_returns()
+    ind_mktcap = ind_nfirms * ind_size
+    total_mktcap = ind_mktcap.sum(axis = 'columns')
+    ind_capweight = ind_mktcap.divide(total_mktcap, axis = 'rows')
+    total_market_return = (ind_capweight * ind_return).sum(axis = 'columns')
+    return total_market_return
 
 def semideviation(r):
     '''
@@ -207,12 +221,12 @@ def annualise_vol(r, periods_per_year):
     '''
     return r.std()*(periods_per_year**0.5)
 
-def sharpe_ratio(r, risk_free_rate, periods_per_year):
+def sharpe_ratio(r, riskfree_rate, periods_per_year):
     '''
     Computes the annualised Sharpe Ratio of a set of returns
     '''
     # convert the annual risk free rate to per period
-    rf_per_period = (1+risk_free_rate)**(1/periods_per_year) - 1
+    rf_per_period = (1+riskfree_rate)**(1/periods_per_year) - 1
     excess_ret = r - rf_per_period
     ann_ex_ret = annualise_rets(excess_ret, periods_per_year)
     ann_vol = annualise_vol(r, periods_per_year)
@@ -349,3 +363,81 @@ def plot_ef(n_points, er, cov, show_cml = False, style = '.-', riskfree_rate = 0
         ax.plot(cml_x, cml_y, color = 'green', marker = 'o', linestyle = 'dashed', markersize = 10, linewidth = 2)
 
     return ax
+
+def run_cppi(risky_r, safe_r = None, m = 3, start = 1000, floor = 0.8, riskfree_rate = 0.03, drawdown_constraint = None):
+    '''
+    Run a backtest of the CPPI strategy, given a set of returns for the risky asset
+    Returns a dictionary containing: Asset Value History, Risk Budget History and Risky Weight History
+    '''
+    # set up cppi parameters
+    dates = risky_r.index
+    n_steps = len(dates)
+    account_value = start
+    floor_value = start * floor
+    peak = start
+
+    if isinstance(risky_r, pd.Series):
+        risky_r = pd.DataFrame(risky_r, columns = ['R'])
+    
+    if safe_r is None:
+        safe_r = pd.DataFrame().reindex_like(risky_r)
+        safe_r.values[:] = riskfree_rate/12
+
+    account_history = pd.DataFrame().reindex_like(risky_r)
+    cushion_history = pd.DataFrame().reindex_like(risky_r)
+    risky_w_history = pd.DataFrame().reindex_like(risky_r)
+
+    for step in range(n_steps):
+        if drawdown is not None:
+            peak = np.maximum(peak, account_value)
+            floor_value = peak * (1 - drawdown_constraint)
+        cushion = (account_value - floor_value)/account_value
+        risky_w = m * cushion
+        risky_w = np.minimum(risky_w, 1)
+        risky_w = np.maximum(risky_w, 0)
+        safe_w = 1 - risky_w
+        risky_alloc = account_value * risky_w
+        safe_alloc = account_value * safe_w
+        # update account value for this time step
+        account_value = (risky_alloc * (1 + risky_r.iloc[step])) + (safe_alloc * (1+ safe_r.iloc[step]))
+        # save values to look at history
+        cushion_history.iloc[step] = cushion
+        risky_w_history.iloc[step] = risky_w
+        account_history.iloc[step] = account_value
+
+    risky_wealth = start * (1 + risky_r).cumprod()
+    backtest_result = {
+        'Wealth': account_history,
+        'Risky Wealth': risky_wealth,
+        'Risk Budget': cushion_history,
+        'Risky Allocation': risky_w_history,
+        'm': m,
+        'start': start,
+        'floor': floor,
+        'risky_r': risky_r,
+        'safe_R': safe_r
+    }
+    return backtest_result
+
+def summary_stats(r, riskfree_rate = 0.03):
+    '''
+    Return a DataFrame that contains aggregated summary stats for the returns in the columns of r
+    '''
+    ann_r = r.aggregate(annualise_rets, periods_per_year = 12)
+    ann_vol = r.aggregate(annualise_vol, periods_per_year = 12)
+    ann_sr = r.aggregate(sharpe_ratio, riskfree_rate = riskfree_rate, periods_per_year = 12)
+    dd = r.aggregate(lambda r: drawdown(r).Drawdown.min())
+    skew = r.aggregate(skewness)
+    kurt = r.aggregate(kurtosis)
+    cf_var5 = r.aggregate(var_gaussian, modified = True)
+    hist_cvar5 = r.aggregate(cvar_historic)
+    return pd.DataFrame({
+        'Annualised Return': ann_r,
+        'Annualised Vol': ann_vol,
+        'Skewness': skew,
+        'Kurtosis': kurt,
+        'Cornish-Fisher VaR (5%)': cf_var5,
+        'Historic CVaR (5%)': hist_cvar5,
+        'Sharpe Ratio': ann_sr,
+        'Max Drawdown': dd
+    })
