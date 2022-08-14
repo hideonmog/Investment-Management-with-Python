@@ -33,7 +33,6 @@ Below are my notes and lab session work contained in jupyter notebooks, named by
 - [Introduction to CPPI](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/12-intro-to-cppi.ipynb)
 
 ### Section 2
-- Stochastic Model
-- Analysing, Designing and Calibrating CPPI Strategies
+- [Stochastic Model](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/12-random-walks-monte-carlo.ipynb)
 
 ## Introduction to Asset-Liability Management 
