@@ -1,4 +1,3 @@
-from email.errors import InvalidMultipartContentTransferEncodingDefect
 import pandas as pd
 import scipy.stats
 import scipy.optimize
@@ -388,9 +387,11 @@ def run_cppi(risky_r, safe_r = None, m = 3, start = 1000, floor = 0.8, riskfree_
     risky_w_history = pd.DataFrame().reindex_like(risky_r)
 
     for step in range(n_steps):
-        if drawdown is not None:
+        if drawdown_constraint is not None:
             peak = np.maximum(peak, account_value)
             floor_value = peak * (1 - drawdown_constraint)
+        else:
+            None
         cushion = (account_value - floor_value)/account_value
         risky_w = m * cushion
         risky_w = np.minimum(risky_w, 1)
@@ -442,7 +443,18 @@ def summary_stats(r, riskfree_rate = 0.03):
         'Max Drawdown': dd
     })
 
-def gbm(n_years = 10, n_scenarios=1000, mu=0.07, sigma=0.15, steps_per_year=12, s_0=100.0, prices=True):
+def gbm(n_years = 10, n_scenarios = 1000, mu = 0.07, sigma = 0.15, steps_per_year = 12, s_0 = 100):
+    '''
+    Evolution of a Stock Price using a Geometric Brownian Motion Model
+    '''
+    dt = 1/steps_per_year
+    n_steps = int(n_years * steps_per_year)
+    rets_plus_1 = np.random.normal(loc = 1 + mu * dt, scale = sigma * np.sqrt(dt), size = (n_steps, n_scenarios))
+    # to prices
+    prices = s_0 * pd.DataFrame((rets_plus_1)).cumprod()
+    return prices
+
+def gbm_updated(n_years = 10, n_scenarios=1000, mu=0.07, sigma=0.15, steps_per_year=12, s_0=100.0, prices=True):
     """
     Evolution of Geometric Brownian Motion trajectories, such as for Stock Prices through Monte Carlo
     :param n_years:  The number of years to generate data for
