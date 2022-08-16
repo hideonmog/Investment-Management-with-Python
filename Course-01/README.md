@@ -34,5 +34,6 @@ Below are my notes and lab session work contained in jupyter notebooks, named by
 
 ### Section 2
 - [Stochastic Model](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/13-random-walks-monte-carlo.ipynb)
+- [Analysing, Designing and Calibrating CPPI Strategies](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/14-cppi-strategies.ipynb)
 
 ## Introduction to Asset-Liability Management 
