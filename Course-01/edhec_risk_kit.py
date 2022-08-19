@@ -530,3 +530,26 @@ def show_cppi(n_scenarios = 50, mu = 0.07, sigma = 0.15, m = 3, floor = 0, riskf
     if (floor > 0.01):
         hist_ax.axhline(y = start * floor, ls = '--', color = 'red', linewidth = 3)
         hist_ax.annotate(f'Violations: {n_failiures} ({p_fail * 100: 2.2f}%)\n E(shortfall)=${e_shortfall: 2.2f}', xy = (0.675, 0.7),xycoords = 'axes fraction', fontsize = 24)
+
+def discount(t, r):
+    '''
+    Compute the price of a pure discount bond that pays a dollar at time t, given annual interest rate r
+    '''
+    return (1 + r)**(-t)
+
+def pv(l, r):
+    '''
+    Computes the present value of a set of liabilities
+    l is indexed by the time, and the values are the amounts of each liability
+    r is the annual interest rate
+    returns the present value of the sum of liabilities
+    '''
+    dates = l.index
+    discounts = discount(dates, r)
+    return (discounts * l).sum()
+
+def funding_ratio(assets, liabilities, r):
+    '''
+    Computes the funding ratio of some assets given liabilities and interest rate
+    '''
+    return assets/pv(liabilities, r)
