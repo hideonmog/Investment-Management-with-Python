@@ -41,6 +41,6 @@ Below are my notes and lab session work contained in jupyter notebooks, named by
 ### Section 1
 - [Asset-Liability Management](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/15-asset-liability-management.ipynb)
 - [Liability-Hedging Portfolio](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/16-liability-hedging-portfolios.ipynb)
-- Liability Driven Investing
+- [Liability-Driven Investing](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/17-liability-driven-investing.ipynb)
 
 ### Section 2
