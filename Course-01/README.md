@@ -44,3 +44,7 @@ Below are my notes and lab session work contained in jupyter notebooks, named by
 - [Liability-Driven Investing](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/17-liability-driven-investing.ipynb)
 
 ### Section 2
+
+- [Choosing the Policy Portfolio](https://github.com/hideonmog/Investment-Management-with-Python/blob/main/Course-01/18-policy-portfolio.ipynb)
+- Beyond Liability-Driven Investing
+- Liability-Friendly Equity Portfolios 
