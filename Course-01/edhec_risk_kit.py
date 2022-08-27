@@ -533,20 +533,24 @@ def show_cppi(n_scenarios = 50, mu = 0.07, sigma = 0.15, m = 3, floor = 0, riskf
 
 def discount(t, r):
     '''
-    Compute the price of a pure discount bond that pays a dollar at time t, given annual interest rate r
+    Compute the price of a pure discount bond that pays a dollar at time period t
+    and r si the per-period interest rate
+    returns a |t| x |r| Series or DataFrame
+    r can be a float, Series or DataFrame
+    returns a DataFrame indexed by t
     '''
-    return (1 + r)**(-t)
+    discounts = pd.DataFrame([(1 + r)**-i for i in t])
+    discount.index = t
+    return discounts
 
-def pv(l, r):
+def pv(flows, r):
     '''
-    Computes the present value of a set of liabilities
-    l is indexed by the time, and the values are the amounts of each liability
-    r is the annual interest rate
-    returns the present value of the sum of liabilities
+    Compute the present value of a sequence of cash flows given by the time (as an index) and amounts
+    r can be a scalar, Series or DataFrame with the number of rows matching the number of rows in flows
     '''
-    dates = l.index
-    discounts = discount(dates, r)
-    return (discounts * l).sum()
+    dates = flows.index
+    discounts = discounts(dates, r)
+    return discounts.multiply(flows, axis = 'rows').sum()
 
 def funding_ratio(assets, liabilities, r):
     '''
