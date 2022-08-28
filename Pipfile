@@ -12,6 +12,7 @@ notebook = "*"
 matplotlib = "*"
 scipy = "*"
 ipywidgets = "*"
+seaborn = "*"
 
 [dev-packages]
 
